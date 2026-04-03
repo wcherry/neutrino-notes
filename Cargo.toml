@@ -1,0 +1,25 @@
+[package]
+name = "neutrino-notes"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+shared = { package = "neutrino-shared", git = "https://github.com/wcherry/neutrino-shared.git" }
+actix-web = "4"
+actix-cors = "0.7.1"
+diesel = { version = "2", features = ["sqlite", "r2d2", "chrono"] }
+diesel_migrations = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+jsonwebtoken = "9"
+uuid = { version = "1", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+tokio = { version = "1", features = ["full"] }
+log = "0.4"
+dotenvy = "0.15"
+utoipa = { version = "4" }
+utoipa-swagger-ui = { version = "6", features = ["actix-web"] }
+thiserror = "1"
+libsqlite3-sys = { version = "0.27", features = ["bundled"] }
+reqwest = { version = "0.12", features = ["json", "multipart"] }
+tracing = "0.1.44"
