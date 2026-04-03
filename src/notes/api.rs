@@ -1,6 +1,9 @@
 use crate::common::{ApiError, AuthenticatedUser};
 use crate::notes::{
-    dto::{CreateNoteRequest, ListNotesResponse, NoteMetaResponse, NoteResponse, SaveNoteRequest},
+    dto::{
+        BacklinksResponse, CreateNoteRequest, ListNotesResponse, NoteMetaResponse, NoteLinkItem,
+        NoteResponse, SaveNoteRequest,
+    },
     service::NotesService,
 };
 use actix_web::{delete, get, patch, post, web, HttpResponse};
@@ -106,6 +109,30 @@ pub async fn save_note(
 }
 
 #[utoipa::path(
+    get,
+    path = "/api/v1/notes/{id}/backlinks",
+    params(
+        ("id" = String, Path, description = "Note ID")
+    ),
+    responses(
+        (status = 200, description = "Notes that link to this note", body = BacklinksResponse),
+        (status = 404, description = "Not found"),
+    ),
+    security(("bearer_auth" = [])),
+    tag = "notes"
+)]
+#[get("/notes/{id}/backlinks")]
+pub async fn get_backlinks(
+    state: web::Data<NotesApiState>,
+    user: AuthenticatedUser,
+    path: web::Path<String>,
+) -> Result<web::Json<BacklinksResponse>, ApiError> {
+    let note_id = path.into_inner();
+    let result = state.notes_service.get_backlinks(&user, &note_id).await?;
+    Ok(web::Json(result))
+}
+
+#[utoipa::path(
     delete,
     path = "/api/v1/notes/{id}",
     params(
@@ -135,18 +162,21 @@ pub fn configure(cfg: &mut web::ServiceConfig) {
         .service(create_note)
         .service(get_note)
         .service(save_note)
+        .service(get_backlinks)
         .service(delete_note);
 }
 
 #[derive(OpenApi)]
 #[openapi(
-    paths(list_notes, create_note, get_note, save_note, delete_note),
+    paths(list_notes, create_note, get_note, save_note, get_backlinks, delete_note),
     components(schemas(
         CreateNoteRequest,
         SaveNoteRequest,
         NoteResponse,
         NoteMetaResponse,
         ListNotesResponse,
+        BacklinksResponse,
+        NoteLinkItem,
     )),
     tags((name = "notes", description = "Markdown note editor")),
     security(("bearer_auth" = []))

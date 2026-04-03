@@ -47,3 +47,16 @@ pub struct NoteMetaResponse {
 pub struct ListNotesResponse {
     pub notes: Vec<NoteMetaResponse>,
 }
+
+#[derive(Debug, Serialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct NoteLinkItem {
+    pub id: String,
+    pub title: String,
+}
+
+#[derive(Debug, Serialize, ToSchema)]
+#[serde(rename_all = "camelCase")]
+pub struct BacklinksResponse {
+    pub backlinks: Vec<NoteLinkItem>,
+}
