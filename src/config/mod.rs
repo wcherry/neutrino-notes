@@ -1,4 +1,5 @@
 use std::env;
+use shared::get_env_or_secret;
 
 #[derive(Debug, Clone)]
 pub struct Config {
@@ -23,7 +24,7 @@ impl Config {
             .map_err(|e| format!("Invalid PORT: {}", e))?;
 
         let jwt_secret =
-            env::var("JWT_SECRET").map_err(|_| "JWT_SECRET environment variable is required")?;
+            get_env_or_secret("JWT_SECRET").map_err(|_| "JWT_SECRET environment variable is required")?;
 
         if jwt_secret.is_empty() {
             return Err("JWT_SECRET must not be empty".to_string());
