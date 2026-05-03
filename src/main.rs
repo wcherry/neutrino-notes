@@ -81,7 +81,8 @@ async fn main() -> std::io::Result<()> {
         std::process::exit(1);
     });
 
-    init_logging(&config.log_level, config.log_path);
+    // Must be held for the lifetime of main — dropping it shuts down the background log flush thread.
+    let _log_guard = init_logging(&config.log_level, config.log_path);
 
     info!("Starting Neutrino Notes service");
     info!("Connecting to database: {}", config.database_url);
