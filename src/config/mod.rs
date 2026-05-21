@@ -9,6 +9,7 @@ pub struct Config {
     pub log_level: String,
     pub log_path: Option<String>,
     pub drive_base_url: String,
+    pub self_url: String,
 }
 
 impl Config {
@@ -37,6 +38,9 @@ impl Config {
         let drive_base_url =
             env::var("DRIVE_URL").unwrap_or_else(|_| "http://localhost:8882".to_string());
 
+        let self_url = env::var("NOTES_URL")
+            .unwrap_or_else(|_| format!("http://localhost:{}", port));
+
         Ok(Config {
             database_url,
             port,
@@ -44,6 +48,7 @@ impl Config {
             log_level,
             log_path,
             drive_base_url,
+            self_url,
         })
     }
 }

@@ -1,10 +1,10 @@
 [package]
 name = "neutrino-notes"
-version = "0.1.0"
-edition = "2021"
+version = "0.2.0"
+edition = "2024"
 
 [dependencies]
-shared = { package = "neutrino-shared", git = "https://github.com/wcherry/neutrino-shared.git" }
+shared = { package = "neutrino-shared", git = "https://github.com/wcherry/neutrino-shared.git", branch = "main"}
 actix-web = "4"
 actix-cors = "0.7.1"
 diesel = { version = "2", features = ["sqlite", "r2d2", "chrono"] }

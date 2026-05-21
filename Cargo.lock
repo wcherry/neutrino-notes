@@ -1381,7 +1381,7 @@ dependencies = [
 
 [[package]]
 name = "neutrino-notes"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "actix-cors",
  "actix-web",
@@ -1407,7 +1407,7 @@ dependencies = [
 [[package]]
 name = "neutrino-shared"
 version = "0.1.0"
-source = "git+https://github.com/wcherry/neutrino-shared.git#306170a9e7dafc9b8cd5a5d15c754487a63a45ad"
+source = "git+https://github.com/wcherry/neutrino-shared.git?branch=main#08fbdbf4a876932137b1b72542116d8594d67414"
 dependencies = [
  "actix-web",
  "chrono",
